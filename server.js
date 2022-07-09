@@ -75,6 +75,7 @@ app.enable('trust proxy')
 app.get('/', function(req, res) {
     //console.log({ sess: req.session });
     console.log('get /');
+    console.log({ id: req.session.id });
     res.send('Our Server is Up and Running!')
 })
 
@@ -82,9 +83,9 @@ app.get('/', function(req, res) {
 app.get('/date', function(req, res) {
 
     var utcDate = new Date()
-    req.session.id = String(utcDate) + '  hh'
+    req.session.id = 'hh  ' + String(utcDate) + '  hh'
     console.log({ id: req.session.id });
-    // console.log({ sess: req.session });
+    console.log({ sess: req.session });
     var day = utcDate.getDate()
     var month = utcDate.getMonth() + 1
     var year = utcDate.getFullYear()
