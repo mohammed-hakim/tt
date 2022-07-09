@@ -113,7 +113,13 @@ app.use(session({
     name: 'COOKI_NAME',
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 60000 }
+    cookie: {
+        maxAge: 60000,
+        maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
+        httpOnly: true, //not access in browser
+        sameSite: 'lax', //'lax', //csrf
+        secure: false //__prod__, //https
+    }
 }))
 
 // Access the session as req.session
@@ -125,6 +131,7 @@ app.get('/', function(req, res, next) {
         res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
         res.end()
     } else {
+        console.log(88);
         req.session.views = 1
         res.end('welcome to the session demo. refresh!')
     }
