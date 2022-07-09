@@ -41,7 +41,7 @@ var sess_options = {
     maxAge: 10000
 };
 app.use(session({
-    store: new FileStore(sess_options),
+    //   store: new FileStore(sess_options),
     // secret: 'my_secret_key',
     // resave: true,
     // saveUninitialized: false

@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "git": "git init && git add . && git commit -am 'aa' && git branch -M main && git remote add origin https://github.com/mohammed-hakim/tt.git && git push -u origin main"
+        "git": "git init && git add . && git commit -am 'aa' && git branch -M main && git remote add origin https://github.com/mohammed-hakim/tt.git && git push -u origin main",
+        "git2": "git add . && git commit -am 'aa'&& git push -u origin main"
     },
     "author": "",
     "license": "ISC",
