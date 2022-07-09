@@ -41,30 +41,27 @@ var sess_options = {
     maxAge: 10000
 };
 
-app.set('trust proxy', 1) // trust first proxy
+// app.set('trust proxy', 1) // trust first proxy
 
-app.use(session({
-    // store: new FileStore(sess_options),
-    // secret: 'my_secret_key',
-    // resave: true,
-    // saveUninitialized: false
+// app.use(session({
+//     store: new FileStore(sess_options),
+//     // secret: 'my_secret_key',
+//     // resave: true,
+//     // saveUninitialized: false
 
-    secret: 'jakfsjdhkahsdsajhjfkhsh',
-    name: 'COOKI_NAME',
-    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
-        httpOnly: true, //not access in browser
-        sameSite: 'lax', //'lax', //csrf
-        secure: true //__prod__, //https
-    },
-    saveUninitialized: false,
-    resave: false,
-}));
+//     secret: 'jakfsjdhkahsdsajhjfkhsh',
+//     name: 'COOKI_NAME',
+//     proxy: !true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+//     cookie: {
+//         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
+//         httpOnly: true, //not access in browser
+//         sameSite: 'lax', //'lax', //csrf
+//         secure: !true //__prod__, //https
+//     },
+//     saveUninitialized: false,
+//     resave: false,
+// }));
 
-
-app.set('trust proxy', 1)
-app.enable('trust proxy')
 
 
 
@@ -72,6 +69,8 @@ app.enable('trust proxy')
 
 
 //GET STATUS ENDPOINT
+
+/* 
 app.get('/', function(req, res) {
     //console.log({ sess: req.session });
     console.log('get /');
@@ -94,4 +93,39 @@ app.get('/date', function(req, res) {
     var todaysDate = `${month}-${day}-${year}`
 
     res.send(todaysDate)
+}) */
+
+//     store: new RedisStore({ client: redis, disableTouch: true }),
+//     secret: 'jakfsjdhkahsdsajhjfkhsh',
+//     name: COOKI_NAME,
+//     proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
+//       httpOnly: true, //not access in browser
+//       sameSite: 'lax', //'lax', //csrf
+//       secure: false //__prod__, //https
+//     },
+//     saveUninitialized: false,
+//     resave: false,
+
+app.use(session({
+    secret: 'keyboard cat',
+    name: 'COOKI_NAME',
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 60000 }
+}))
+
+// Access the session as req.session
+app.get('/', function(req, res, next) {
+    if (req.session.views) {
+        req.session.views++
+            res.setHeader('Content-Type', 'text/html')
+        res.write('<p>views: ' + req.session.views + '</p>')
+        res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+        res.end()
+    } else {
+        req.session.views = 1
+        res.end('welcome to the session demo. refresh!')
+    }
 })
