@@ -40,8 +40,11 @@ var sess_options = {
     reapInterval: 5000,
     maxAge: 10000
 };
+
+app.set('trust proxy', 1) // trust first proxy
+
 app.use(session({
-    //   store: new FileStore(sess_options),
+    // store: new FileStore(sess_options),
     // secret: 'my_secret_key',
     // resave: true,
     // saveUninitialized: false
@@ -70,7 +73,8 @@ app.enable('trust proxy')
 
 //GET STATUS ENDPOINT
 app.get('/', function(req, res) {
-    console.log({ sess: req.session });
+    //console.log({ sess: req.session });
+    console.log('get /');
     res.send('Our Server is Up and Running!')
 })
 
@@ -80,7 +84,7 @@ app.get('/date', function(req, res) {
     var utcDate = new Date()
     req.session.id = String(utcDate) + '  hh'
     console.log({ id: req.session.id });
-    console.log({ sess: req.session });
+    // console.log({ sess: req.session });
     var day = utcDate.getDate()
     var month = utcDate.getMonth() + 1
     var year = utcDate.getFullYear()
