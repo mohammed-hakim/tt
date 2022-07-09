@@ -78,7 +78,8 @@ app.get('/', function(req, res) {
 app.get('/date', function(req, res) {
 
     var utcDate = new Date()
-    req.session.id = utcDate + '  hh'
+    req.session.id = String(utcDate) + '  hh'
+    console.log({ id: req.session.id });
     console.log({ sess: req.session });
     var day = utcDate.getDate()
     var month = utcDate.getMonth() + 1
