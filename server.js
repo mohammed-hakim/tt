@@ -56,7 +56,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
         httpOnly: true, //not access in browser
         sameSite: 'lax', //'lax', //csrf
-        secure: false //__prod__, //https
+        secure: true //__prod__, //https
     },
     saveUninitialized: false,
     resave: false,
