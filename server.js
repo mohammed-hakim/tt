@@ -107,7 +107,7 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
         httpOnly: true, //not access in browser
-        sameSite: 'none', //'lax', //csrf
+        sameSite: false, //'lax', //csrf
         secure: false //__prod__, //https
     }
 }))
