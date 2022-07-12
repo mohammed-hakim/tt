@@ -103,8 +103,8 @@ app.use(session({
     name: 'COOKI_NAME',
     saveUninitialized: false,
     resave: false,
+    proxy: true,
     cookie: {
-        maxAge: 60000,
         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
         httpOnly: !true, //not access in browser
         sameSite: false, //'lax', //csrf
