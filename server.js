@@ -97,7 +97,7 @@ app.get('/date', function(req, res) {
 }) */
 
 app.use(cors({ credentials: true, origin: ['http://localhost:6060', 'http://localhost:4223'] }))
-
+app.set('trust proxy', 1)
 app.use(session({
     secret: 'keyboard cat',
     name: 'COOKI_NAME',
@@ -108,7 +108,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
         httpOnly: true, //not access in browser
         sameSite: false, //'lax', //csrf
-        secure: false //__prod__, //https
+        secure: true //__prod__, //https
     }
 }))
 
