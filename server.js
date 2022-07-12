@@ -1,9 +1,10 @@
 var express = require("express");
+var cors = require("cors");
 var session = require('express-session');
 var app = express();
 
 // Set the Server Port
-var PORT = process.env.PORT || 8080
+var PORT = process.env.PORT || 6060
 var server = app.listen(PORT, function() {
     var host = server.address().address;
     var port = server.address().port;
@@ -95,18 +96,7 @@ app.get('/date', function(req, res) {
     res.send(todaysDate)
 }) */
 
-//     store: new RedisStore({ client: redis, disableTouch: true }),
-//     secret: 'jakfsjdhkahsdsajhjfkhsh',
-//     name: COOKI_NAME,
-//     proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-//     cookie: {
-//       maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
-//       httpOnly: true, //not access in browser
-//       sameSite: 'lax', //'lax', //csrf
-//       secure: false //__prod__, //https
-//     },
-//     saveUninitialized: false,
-//     resave: false,
+app.use(cors({ credentials: true, origin: ['http://localhost:6060', 'http://localhost:4223'] }))
 
 app.use(session({
     secret: 'keyboard cat',
@@ -117,22 +107,29 @@ app.use(session({
         maxAge: 60000,
         maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 10,
         httpOnly: true, //not access in browser
-        sameSite: 'lax', //'lax', //csrf
+        sameSite: false, //'lax', //csrf
         secure: false //__prod__, //https
     }
 }))
 
 // Access the session as req.session
 app.get('/', function(req, res, next) {
+    console.log({ id: req.session.id });
+
     if (req.session.views) {
         req.session.views++
-            res.setHeader('Content-Type', 'text/html')
-        res.write('<p>views: ' + req.session.views + '</p>')
-        res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-        res.end()
+            //    res.setHeader('Content-Type', 'text/html')
+            // res.write('<p>views: ' + req.session.views + '</p>')
+            // res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+            // res.end()
+            res.json({ text: 'views : ' + req.session.views })
+        console.log({ text: 'views : ' + req.session.views });
+
     } else {
-        console.log(88);
         req.session.views = 1
-        res.end('welcome to the session demo. refresh!')
+            // res.end('welcome to the session demo. refresh!')
+        res.json({ text: 'welcome to the session demo. refresh!' })
+        console.log({ text: 'welcome to the session demo. refresh!' })
+
     }
 })
